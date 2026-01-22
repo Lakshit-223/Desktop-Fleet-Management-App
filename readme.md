@@ -5,7 +5,7 @@
 A comprehensive desktop application for fleet and vehicle management, featuring offline capabilities, bilingual (English/Urdu) support, and financial tracking.
 
 ## 📋 Table of Contents
-- [Features](##features)
+- [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
@@ -16,7 +16,7 @@ A comprehensive desktop application for fleet and vehicle management, featuring 
 
 ---
 
-## ✨ Features
+# ✨ Features
 
 *   **Desktop Application:** Built with Electron for a seamless native Windows experience.
 *   **Offline First:** Utilizes SQLite (`better-sqlite3`) for local data storage. No internet connection required.
