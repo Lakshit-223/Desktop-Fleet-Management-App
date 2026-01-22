@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "name": "fleet-manager-pro",
+  "builds": [
+    {
+      "src": "deploy/*",
+      "use": "@vercel/static",
+      "config": { "distDir": "deploy" }
+    }
+  ]
+}
