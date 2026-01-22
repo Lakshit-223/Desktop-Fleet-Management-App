@@ -5,7 +5,7 @@
 A comprehensive desktop application for fleet and vehicle management, featuring offline capabilities, bilingual (English/Urdu) support, and financial tracking.
 
 ## 📋 Table of Contents
-- [Features](#features)
+- [Features](##features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
