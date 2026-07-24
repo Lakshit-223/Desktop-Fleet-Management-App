@@ -101,6 +101,19 @@ export function registerIpcHandlers() {
     ]);
   });
 
+  ipcMain.handle('delete-vehicle', (event, vehicleId: number) => {
+    const deleteVehicle = db.default.transaction((id: number) => {
+      // Remove records that reference the vehicle before deleting it so this
+      // operation remains valid when SQLite foreign keys are enabled.
+      db.dbRun('DELETE FROM trips WHERE vehicle_id = ?', [id]);
+      db.dbRun('DELETE FROM diesel_logs WHERE vehicle_id = ?', [id]);
+      db.dbRun('DELETE FROM maintenance_log WHERE vehicle_id = ?', [id]);
+      return db.dbRun('DELETE FROM vehicles WHERE id = ?', [id]);
+    });
+
+    return deleteVehicle(vehicleId);
+  });
+
   // --- TRIPS ---
   ipcMain.handle('get-trips', () => {
     const sql = `

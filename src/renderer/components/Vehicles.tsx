@@ -200,6 +200,21 @@ const Vehicles = () => {
     closeVehicleDetails();
   };
 
+  const handleDeleteVehicle = async () => {
+    if (!selectedVehicle) {
+      return;
+    }
+
+    const vehicleName = selectedVehicle.name || selectedVehicle.vehicle_code || `#${selectedVehicle.id}`;
+    if (!window.confirm(`${t('confirmDeleteVehicle')} \"${vehicleName}\"?`)) {
+      return;
+    }
+
+    await window.electronAPI.deleteVehicle(selectedVehicle.id);
+    setVehicles(currentVehicles => currentVehicles.filter(vehicle => vehicle.id !== selectedVehicle.id));
+    closeVehicleDetails();
+  };
+
   const vehicleSummary = useMemo(() => {
     if (!selectedVehicle) {
       return [];
@@ -383,6 +398,7 @@ const Vehicles = () => {
                 </div>
                 <div className="vehicle-modal__actions">
                   <button type="submit" className="btn btn-primary">{t('saveVehicle')}</button>
+                  <button type="button" className="btn btn-danger" onClick={handleDeleteVehicle}>{t('deleteVehicle')}</button>
                   <button type="button" className="btn btn-secondary" onClick={() => setIsEditingDetails(false)}>{t('cancel')}</button>
                 </div>
               </form>

@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getVehicles: () => ipcRenderer.invoke('get-vehicles'),
   addVehicle: (vehicle: any) => ipcRenderer.invoke('add-vehicle', vehicle),
   updateVehicle: (vehicle: any) => ipcRenderer.invoke('update-vehicle', vehicle),
+  deleteVehicle: (vehicleId: number) => ipcRenderer.invoke('delete-vehicle', vehicleId),
   
   // Trips
   getTrips: () => ipcRenderer.invoke('get-trips'),

@@ -2,6 +2,7 @@ export interface ElectronAPI {
   getVehicles: () => Promise<any[]>;
   addVehicle: (vehicle: any) => Promise<any>;
   updateVehicle: (vehicle: any) => Promise<any>;
+  deleteVehicle: (vehicleId: number) => Promise<any>;
   getTrips: () => Promise<any[]>;
   addTrip: (trip: any) => Promise<any>;
   getDieselLogs: () => Promise<any[]>;
