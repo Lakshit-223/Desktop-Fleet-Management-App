@@ -9,14 +9,95 @@ export function registerIpcHandlers() {
 
   ipcMain.handle('add-vehicle', (event, vehicle) => {
     const sql = `
-      INSERT INTO vehicles (name, plate_number, model, purchase_date)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO vehicles (
+        vehicle_code,
+        name,
+        borrower_name,
+        loan_number,
+        bank_name,
+        plate_number,
+        model,
+        scan_document,
+        in_name,
+        yard_name,
+        purchase_date,
+        entry_date,
+        original_document,
+        confirm_by,
+        payment_status,
+        mailed,
+        remarks,
+        status
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     return db.dbRun(sql, [
+      vehicle.vehicleCode,
       vehicle.name, 
+      vehicle.borrowerName,
+      vehicle.loanNumber,
+      vehicle.bankName,
       vehicle.plateNumber, 
       vehicle.model, 
-      vehicle.purchaseDate
+      vehicle.scanDocument,
+      vehicle.inName,
+      vehicle.yardName,
+      vehicle.purchaseDate,
+      vehicle.entryDate,
+      vehicle.originalDocument,
+      vehicle.confirmBy,
+      vehicle.paymentStatus,
+      vehicle.mailed,
+      vehicle.remarks,
+      vehicle.status
+    ]);
+  });
+
+  ipcMain.handle('update-vehicle', (event, vehicle) => {
+    const sql = `
+      UPDATE vehicles
+      SET
+        vehicle_code = ?,
+        name = ?,
+        borrower_name = ?,
+        loan_number = ?,
+        bank_name = ?,
+        plate_number = ?,
+        model = ?,
+        scan_document = ?,
+        in_name = ?,
+        yard_name = ?,
+        purchase_date = ?,
+        entry_date = ?,
+        original_document = ?,
+        confirm_by = ?,
+        payment_status = ?,
+        mailed = ?,
+        remarks = ?,
+        status = ?
+      WHERE id = ?
+    `;
+
+    return db.dbRun(sql, [
+      vehicle.vehicleCode,
+      vehicle.name,
+      vehicle.borrowerName,
+      vehicle.loanNumber,
+      vehicle.bankName,
+      vehicle.plateNumber,
+      vehicle.model,
+      vehicle.scanDocument,
+      vehicle.inName,
+      vehicle.yardName,
+      vehicle.purchaseDate,
+      vehicle.entryDate,
+      vehicle.originalDocument,
+      vehicle.confirmBy,
+      vehicle.paymentStatus,
+      vehicle.mailed,
+      vehicle.remarks,
+      vehicle.status,
+      vehicle.id
     ]);
   });
 

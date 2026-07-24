@@ -10,18 +10,60 @@ const db = new Database(dbPath);
 // Enable foreign keys
 db.pragma('foreign_keys = ON');
 
+function ensureVehicleColumns() {
+  const existingColumns = db.prepare(`PRAGMA table_info(vehicles)`).all() as Array<{ name: string }>;
+  const columnNames = new Set(existingColumns.map(column => column.name));
+
+  const columnsToAdd = [
+    ['vehicle_code', 'TEXT'],
+    ['borrower_name', 'TEXT'],
+    ['loan_number', 'TEXT'],
+    ['bank_name', 'TEXT'],
+    ['scan_document', 'TEXT'],
+    ['in_name', 'TEXT'],
+    ['yard_name', 'TEXT'],
+    ['entry_date', 'TEXT'],
+    ['original_document', 'TEXT'],
+    ['confirm_by', 'TEXT'],
+    ['payment_status', "TEXT DEFAULT 'pending'"],
+    ['mailed', "TEXT DEFAULT 'no'"],
+    ['remarks', 'TEXT']
+  ] as const;
+
+  for (const [columnName, columnDefinition] of columnsToAdd) {
+    if (!columnNames.has(columnName)) {
+      db.exec(`ALTER TABLE vehicles ADD COLUMN ${columnName} ${columnDefinition}`);
+    }
+  }
+}
+
 export function initializeDatabase() {
   // 1. Vehicles Table
   db.exec(`
     CREATE TABLE IF NOT EXISTS vehicles (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      vehicle_code TEXT,
       name TEXT NOT NULL,
+      borrower_name TEXT,
+      loan_number TEXT,
+      bank_name TEXT,
       plate_number TEXT UNIQUE NOT NULL,
       model TEXT,
+      scan_document TEXT,
+      in_name TEXT,
+      yard_name TEXT,
       purchase_date TEXT,
+      entry_date TEXT,
+      original_document TEXT,
+      confirm_by TEXT,
+      payment_status TEXT DEFAULT 'pending',
+      mailed TEXT DEFAULT 'no',
+      remarks TEXT,
       status TEXT DEFAULT 'active'
     )
   `);
+
+  ensureVehicleColumns();
 
   // 2. Trips Table
   db.exec(`

@@ -8,6 +8,9 @@ let mainWindow: BrowserWindow | null = null;
 // src/main/index.ts
 
 function createWindow() {
+  initializeDatabase();
+  registerIpcHandlers();
+
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -19,11 +22,7 @@ function createWindow() {
     title: "Fleet Manager Pro"
   });
 
-  // UPDATE THIS LINE:
   mainWindow.loadFile(path.join(__dirname, '../index.html'));
-
-  initializeDatabase();
-  registerIpcHandlers();
 }
 
 app.on('ready', createWindow);
